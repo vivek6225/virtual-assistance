@@ -28,16 +28,15 @@ export const signUp = async (req, res) => {
       password: hashedPassword
     });
 
-    
-    const token = await genToken(user._id)
+    const token = await genToken(user._id);
 
-    res.cookie("token", token,{
-      httpOnly:true,
-      maxAge:7*24*60*60*1000,
-      sameSite:"strict",
-      secure:false
-    })
-    
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "lax",
+      secure: false
+    });
+
     res.status(201).json({
       message: "User created successfully",
       user
@@ -52,41 +51,48 @@ export const signUp = async (req, res) => {
 
 // login
 
-export const Login  = async(req, res)=>{
+export const Login = async (req, res) => {
   try {
-      const {email, password} = req.body
+    const { email, password } = req.body;
 
-      const user = await User.findOne({email})
-      if(!user){
-        return res.status(400).json({message : "Invalid email"})
-      }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email" });
+    }
 
-      const isMatch = await bcrypt.compare(password, user.password)
-      if(!isMatch){
-      return res.status(400).json({message: "incorrect password"})
-      }
-      res.cookie("token" , token, {
-        httpOnly: true,
-        maxAge: 7*24*60*60*1000,
-        sameSite:"strict",
-        secure : false
-      })
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "incorrect password" });
+    }
 
-      return res.status(200).json(user)
+    const token = await genToken(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "lax",
+       secure: false
+    });
+
+    // return res.status(200).json(user);
+    return res.status(200).json({
+      message:"login successfully",
+      user
+    })
+
   } catch (error) {
- return res.status(500).json({message:`login error${error}`})
-    
+    return res.status(500).json({ message: `login error${error}` });
   }
-}
+};
 
 // log out
 
-export const logout = async(req, res)=>{
+export const logout = async (req, res) => {
   try {
-    res.clearCookie("token")
-    return res.status(200).json({message: "log out successfully"})
+    res.clearCookie("token");
+    return res.status(200).json({ message: "log out successfully" });
 
   } catch (error) {
-    return res.status(500).json({message : `logout error ${error}`})
+    return res.status(500).json({ message: `logout error ${error}` });
   }
-}
+};
