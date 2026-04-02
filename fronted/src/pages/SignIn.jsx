@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react'
 import bg from "../assets/authBg.png"
 import { IoEye, IoEyeOff } from "react-icons/io5"
 import { useNavigate } from 'react-router-dom';
-import { userDataContext } from '../context/userContext';
+import { userDataContext } from '../context/UserContext.jsx';
 import axios from 'axios';
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const { serverUrl } = useContext(userDataContext)
+  //  const { serverUrl } = useContext(userDataContext)
+  const { serverUrl, handleCurrentUser } = useContext(userDataContext)
+ 
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -24,9 +26,13 @@ const SignIn = () => {
         email, password
       }, { withCredentials: true })
 
+      // if (result.status === 200) {
+      //   navigate("/signup")   
+      // }
       if (result.status === 200) {
-        navigate("/signup")   
-      }
+  await handleCurrentUser();  
+  navigate("/");               
+}
 
       setLoading(false)
     } catch (error) {
