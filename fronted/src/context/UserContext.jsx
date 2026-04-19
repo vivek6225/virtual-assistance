@@ -8,7 +8,9 @@ const UserContext = ({ children }) => {
   const serverUrl = "http://localhost:5000"
 
   const [userData, setUserData]=useState(null)
-
+    const [frontedImage , setFrontedImage] = useState(null)
+    const [backendImage , setBackendImage] = useState(null)
+   const[selectedImage, setSelectedImage] = useState(null)
   const handleCurrentUser=async ()=>{
     try {
       const result=await axios.get(`${serverUrl}/api/user/current`,{withCredentials:true})
@@ -31,7 +33,13 @@ const UserContext = ({ children }) => {
   serverUrl,
   userData,
   setUserData,
-  handleCurrentUser
+  handleCurrentUser,
+  backendImage ,
+   setBackendImage,
+   frontedImage , 
+   setFrontedImage,
+   selectedImage,
+    setSelectedImage
   }
 
   return (
