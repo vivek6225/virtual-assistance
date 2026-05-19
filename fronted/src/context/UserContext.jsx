@@ -8,7 +8,7 @@ const UserContext = ({ children }) => {
   const serverUrl = "http://localhost:5000"
 
   const [userData, setUserData]=useState(null)
-    const [frontedImage , setFrontedImage] = useState(null)
+    const [frontendImage , setFrontendImage] = useState(null)
     const [backendImage , setBackendImage] = useState(null)
    const[selectedImage, setSelectedImage] = useState(null)
   const handleCurrentUser=async ()=>{
@@ -36,10 +36,11 @@ const UserContext = ({ children }) => {
   handleCurrentUser,
   backendImage ,
    setBackendImage,
-   frontedImage , 
-   setFrontedImage,
+   frontendImage , 
+   setFrontendImage,
    selectedImage,
     setSelectedImage
+    
   }
 
   return (

@@ -1,3 +1,4 @@
+import { MdKeyboardBackspace } from "react-icons/md";
 import React, { useState, useRef } from 'react'
 import { BiImageAdd } from "react-icons/bi";
 import Card from '../components/Card'
@@ -14,17 +15,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Customize  ()  {
- const {  serverUrl,  userData,  setUserData, handleCurrentUser,  backendImage , setBackendImage, frontedImage ,  setFrontedImage,  selectedImage, setSelectedImage}=useContext(userDataContext)
+ const {  serverUrl,  userData,  setUserData, handleCurrentUser,  backendImage , setBackendImage, frontendImage ,  setFrontendImage,  selectedImage, setSelectedImage}=useContext(userDataContext)
  const navigate=useNavigate()
   const inputImage=useRef()
 
   const handleImage=(e)=>{
     const file=e.target.files[0]
     setBackendImage(file)
-    setFrontedImage(URL.createObjectURL(file))
+    setFrontendImage(URL.createObjectURL(file))
   }
   return (
     <div className='w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 gap-10'>
+      <MdKeyboardBackspace className="absolute top-8 left-8 text-white cursor-pointer w-5 h-5" onClick={()=>navigate("/")}/>
    
       <h1 className='text-white text-[30px] text-center'>Select Your <span className='text-blue-200'>Assistant Image</span></h1>
 
@@ -44,15 +46,15 @@ function Customize  ()  {
 
           }}>
 
-            {!frontedImage && <BiImageAdd className='text-white w-10 h-10' /> }
-            {frontedImage && <img src={frontedImage}className='h-full object-cover'/>}
+            {!frontendImage && <BiImageAdd className='text-white w-10 h-10' /> }
+            {frontendImage && <img src={frontendImage}className='h-full object-cover'/>}
           
     
 
     </div>
    <input type="file" accept='image/*' ref={inputImage} hidden onChange={handleImage}/>
       </div>
-        {selectedImage &&  <button className='min-w-40 h-15 mt-7 text-black font-semibold cursor-pointer bg-white rounded-full text-[19px]' onClick={()=>navigate("/customize2")}>Next</button> }
+        {selectedImage &&  <button className='px-6 py-2 text-black font-semibold bg-white rounded-full text-[16px] shadow-md' onClick={()=>navigate("/customize2")}>Next</button> }
       
      
     </div>

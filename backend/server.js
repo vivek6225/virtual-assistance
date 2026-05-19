@@ -1,12 +1,12 @@
-
-import express from "express";
 import dotenv from "dotenv"
+dotenv.config();
+import express from "express";
 import connectDb from "./config/db.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import userRouter from "./routes/user.routes.js";
-dotenv.config()
+
 
 const app = express();
 app.use(cors({
