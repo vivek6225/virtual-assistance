@@ -6,7 +6,7 @@ import moment from "moment"
 
 export const getCurrentUser = async (req, res) => {
   try {
-     const userId = req.userId; // Provided by isAuth middleware
+     const userId = req.userId; 
      const user = await User.findById(userId).select("-password");
 
      if (!user) {
@@ -56,7 +56,7 @@ export const  askToAssistant=async(req,res)=>{
      const {command}=req.body
     const user=await User.findById(req.userId)
     const userName=user.name
-    const assistantName=user.assistanceName
+    const assistantName=user.assistantName
     const result=await geminiResponse(command,userName,assistantName)
 
     const jsonMatch=result.match(/{[\s\S]*}/)
@@ -65,6 +65,8 @@ export const  askToAssistant=async(req,res)=>{
     }
     const gemResult=JSON.parse(jsonMatch[0])
     const type=gemResult.type
+
+
 
       switch(type){
         case 'get-date':
@@ -100,6 +102,7 @@ export const  askToAssistant=async(req,res)=>{
           case 'facebook_open':
           case 'weather_open':
               return res.json({
+                 type,
                 userInput:gemResult.userInput,
                 response:gemResult.response,
               });
