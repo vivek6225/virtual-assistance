@@ -35,7 +35,13 @@ if(transcript.toLowerCase().includes(userData.assistantName.toLowerCase())){
   const data=await getGeminiResponse(transcript)
  
   //console.log(data)
-  console.log("Full Data:", data);
+ console.log("Full Data:", data);
+
+if (!data) {
+  console.log("Data undefined hai");
+  return;
+}
+
 console.log("Type:", data.type);
 console.log("UserInput:", data.userInput);
 console.log("Response:", data.response);
